@@ -1,0 +1,17 @@
+=================================================
+              Kupa 1 : 
+K(1.0,1.0,1.0)
+Zapremina kupe : 3.142
+
+=================================================
+              Kupa 2 : 
+K(0.6,0.3,0.5)
+Zapremina kupe : 0.33
+
+=================================================
+              Kupa 3 : 
+K(2.0,3.0,1.0)
+Zapremina kupe : 19.897
+
+Da li je niz kupa popunjen?  => Niz je popunjen.
+Kupa sa najmanjom zapreminom se nalazi na 2 mestu.
