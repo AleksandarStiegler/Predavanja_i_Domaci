@@ -1,0 +1,16 @@
+CREATE DATABASE biblioteke
+
+Create table biblioteke(
+
+    bibliotekaID int PRIMARY KEY AUTO_INCREMENT,
+    imeBiblioteke varchar (30),
+    ulica varchar (30),
+    broj varchar (10)
+
+)ENGINE = INNODB;
+
+INSERT INTO `biblioteke`(`imeBiblioteke`, `ulica`, `broj`) VALUES ('Svetozar Markovic','Bulevar kralja Aleksandra','71'),('Narodna biblioteka','Skerlićeva','1')
+
+
+
+
