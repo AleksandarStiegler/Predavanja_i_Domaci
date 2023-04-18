@@ -1,0 +1,75 @@
+У компанији која се бави маркетингом се води евиденција о свим обављеним позивима.Позиве обављају запослени за које су познате контакт информације, број текућег рачуна идатум запослења. Запослени су распоређени по секторима у фирми. Сваки сектор иманазив, адресу на којој се налази и телефонски број централе (сви запослени у томсекторуимају исти број централе, и са тог броја позивају клијенте, а имају различите локале).Евиденција позива садржи позвани број, време почетка и дужину тајања разговора
+
+
+CREATE DATABASE marketing
+
+
+Create table zaposleni (
+
+    zaposlenID int PRIMARY KEY AUTO_INCREMENT,
+    ime varchar(30) not null,
+    prezime varchar(30) not null,
+    tekuciRacun int (50) not null,
+    telefon int (13) not null,
+    grad varchar (20) ,
+    ulica varchar (50),
+    brojUlice varchar (5),
+    datumZaposlenja date
+
+)ENGINE = INNODB
+
+CREATE TABLE Sektori(
+    
+    telSektorID INT(13) PRIMARY KEY,
+    naziv VARCHAR(50) NOT NULL,
+    grad VARCHAR(50) NOT NULL,
+    ulica VARCHAR(50) NOT NULL,
+    broj VARCHAR(5) NOT NULL
+    
+) ENGINE = INNODB
+
+# Ajde da probamo da primarni kljuc ide preko telefona svakog sektora posto su jedinstveni 
+
+ALTER TABLE
+    zaposleni ADD COLUMN telSektorID INT,
+    ADD FOREIGN KEY(telSektorID) REFERENCES sektori(telSektorID) ON UPDATE CASCADE ON DELETE NO ACTION
+
+CREATE TABLE lokali(
+    
+    lokalID INT PRIMARY KEY AUTO_INCREMENT,
+    brojTelefona INT(13) NOT NULL,
+    telSektorID INT,
+    FOREIGN KEY(telSektorID) REFERENCES sektori(telSektorID)
+    
+) ENGINE = INNODB
+
+CREATE TABLE pozivi(
+    
+    pozivID INT PRIMARY KEY AUTO_INCREMENT,
+    pozvanBroj INT(13) NOT NULL,
+    duzinaPoziva DECIMAL(2, 2) NOT NULL,
+    vremePocetkaPoziva DATETIME,
+    zaposlenID INT,
+    lokalID INT,
+    FOREIGN KEY(zaposlenID) REFERENCES zaposleni(zaposlenID) ON UPDATE CASCADE ON DELETE NO ACTION,
+    FOREIGN KEY(lokalID) REFERENCES lokali(lokalID) ON UPDATE CASCADE ON DELETE NO ACTION
+    
+) ENGINE = INNODB
+
+INSERT INTO `sektori`(`telSektorID`, `naziv`, `grad`, `ulica`, `broj`) VALUES (011335897,"Odeljenje za ankete","Beograd","Kneza MIlosa",33),(011367855,"Odeljenje za prodaju","Beograd","Resavska",14),(021544789,"Odeljenje za pomoc","Novi Sad ","Filipa Visnjica",12)
+
+INSERT INTO `zaposleni`( `ime`, `prezime`, `tekuciRacun`, `telefon`, `grad`, `ulica`, `brojUlice`, `datumZaposlenja`, `telSektorID`) VALUES ("Ana","Stanic",275547445891,0642356874,"Beograd","Dimitrija Tucovica","10a",'2021-06-15',011335897),("Mile","Peric",32566974422118,061556574,"Novi Sad","Gunduliceva","27/18",'2018-02-20',011367855),("Sale","Lesta",189666884753,060669855,"Nis","Duvaniste","18c",'2022-01-01',021544789),("Marko","Maric",2147483647,0642233574,"Beograd","Visegradska","17",'2020-05-01',011335897)
+
+# Nisam siguran da li sam dobro shvatio princip sa lokalima ali cu da stavljam broj lokala kao int (3)
+
+INSERT INTO `lokali`(`brojTelefona`, `telSektorID`) VALUES (554,011335897),(555,011335897),(556,011335897),(557,011335897),(558,011335897),(233,011367855),(232,011367855),(175,021544789),(176,021544789),(177,021544789),(178,021544789),(174,021544789)
+
+INSERT INTO `pozivi`(`pozvanBroj`, `duzinaPoziva`, `vremePocetkaPoziva`, `zaposlenID`, `lokalID`) VALUES (011354884,02.20,'2023-02-12 14:25:15',1,1),(011227884,03.25,'2023-02-12 12:51:48',2,3),(018557876,05.30,'2023-02-11 11:35:40',3,4),(021669749,15.10,'2023-01-25 13:15:33',2,2)
+
+# Hmm izgleda da jos ne shvatam kako pravilno da unesem pomocu decimal unosa ali neka ostane ovako posto je bezveze da 
+# ide preko int 
+
+
+
+
+

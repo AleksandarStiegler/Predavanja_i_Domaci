@@ -1,0 +1,52 @@
+Фудбалски клуб има неколико различитих група. За сваку групу су познати најмлађе инајстарије годиште чланова. Kлуб има неколико тренера. Тренер је запослен у клубу ипознате су његове контакт информације, као и број текућег рачуна и број тренерскелиценце. Један тренер може да води и неколико група, а исту групу може да води инеколико тренера. Сваки тренер додељен некој групи има одређену улогу (главни тренер,помоћни тренер, кондициони тренер и сл.), а познати су и датуми од када и до када радиса неком групом
+
+
+Create Database fudbalskiKlub
+
+CREATE TABLE Treneri(
+    
+    trenerID INT(3) PRIMARY KEY AUTO_INCREMENT,
+    ime VARCHAR(30) NOT NULL,
+    prezime VARCHAR(30) NOT NULL,
+    telefon INT(13) NOT NULL,
+    email VARCHAR(45) NOT NULL,
+    brojLicence INT(9) NOT NULL,
+    brojRacuna INT(40) NOT NULL
+    
+) ENGINE = INNODB
+
+
+CREATE TABLE grupe(
+    
+    grupaID INT(2) PRIMARY KEY AUTO_INCREMENT,
+    pocetnoGodiste DATE not null,
+    krajnjeGodiste DATE not null
+     
+) ENGINE = INNODB
+
+
+
+
+CREATE TABLE grupetreneri(
+    
+    grupatreneriID INT PRIMARY KEY AUTO_INCREMENT,
+    datumPocetka DATE,
+    datumZavrsetka DATE,
+    ulogaTrenera ENUM("Glavni","Pomocni","Kondicioni"),
+    trenerID INT,
+    grupaID INT,
+    FOREIGN KEY(trenerID) REFERENCES treneri(trenerID) ON UPDATE CASCADE ON DELETE NO ACTION,
+    FOREIGN KEY(grupaID) REFERENCES grupe(grupaID) ON UPDATE CASCADE ON DELETE NO ACTION
+    
+) ENGINE = INNODB
+
+
+
+INSERT INTO `grupe`(`pocetnoGodiste`, `krajnjeGodiste`) VALUES ('1989-01-01','1992-01-01'),('1992-01-02','1995-01-01'),('1995-01-02','1998-01-01'),('1998-01-02','2002-01-01')
+
+INSERT INTO `treneri`(`ime`, `prezime`, `telefon`, `email`, `brojLicence`, `brojRacuna`) VALUES ("Alisa","Maric",0654587215,"amaric@gmail.com",5567,125489994587),("Janko","Pavlovic",06543325,"javlov@gmail.com",57787,325485574589),("Milojko","Pantic",0611369387,"milojkop@yahoo.com",59736,17355669877),("Srboljub","Peric",0694337216,"perics@gmail.com",132,283556477489)
+
+INSERT INTO `grupetreneri`(`datumPocetka`, `datumZavrsetka`, `ulogaTrenera`, `trenerID`, `grupaID`) VALUES ('2021-08-01','2022-03-30',"Glavni",1,1),('2021-08-01','2022-03-30',"Pomocni",2,1),('2022-04-01','2022-12-30',"Glavni",4,4)
+
+
+
