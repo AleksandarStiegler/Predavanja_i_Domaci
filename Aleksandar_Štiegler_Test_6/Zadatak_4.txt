@@ -1,0 +1,65 @@
+4. [20поена]Извшити следеће упите: 
+a) [5поена]Издвојити места у којима су родени студенти.
+
+Select mesto_rodjenja 
+from dosije
+
+б) [5поена]Приказати податке о студентима који су родени у месту цији назив поциње са В а завршава са е
+
+SELECT *
+from dosije
+where mesto_rodjenja Like('V%e')
+
+в) [5поена]Издвојити податке о испитима на којима студент има 81, 76 или 59 бодова.
+
+Select *
+from ispit
+where bodovi IN(81,76,59)
+
+г) [5поена]Издвојити укупан број студената који бар из једног предмета имају оцену 10.
+
+Select Count(ocena)AS 'Ukupan broj studenata sa makar jednom 10'
+from ispit
+where ocena = 10
+
+CREATE DATABASE testvi;
+
+create table dosije (
+indeks           integer      not null,
+ime              varchar(20)  not null,
+prezime          varchar(25)  not null,
+datum_upisa      date                 ,
+datum_rodjenja   date                 ,
+mesto_rodjenja   varchar(100)         ,
+primary key      (indeks)
+);
+
+insert into dosije(indeks,ime,prezime,datum_upisa,datum_rodjenja,mesto_rodjenja) values
+(20140021, 'Milos'   , 'Peric'      , '2014-07-06', '1995-01-20', 'Beograd' ),
+(20140022, 'Marijana', 'Savkovic'   , '2014-07-05', '1995-03-11', 'Kraljevo'),
+(20130023, 'Sanja'   , 'Terzic'     , '2013-07-04', '1994-11-09', 'Beograd' ),
+(20130024, 'Nikola'  , 'Vukovic'    , '2013-07-04', '1994-09-17',  null     ),
+(20140025, 'Marijana', 'Savkovic'   , '2014-07-06', '1995-02-05', 'Kraljevo'),
+(20140026, 'Zorica'  , 'Miladinovic', '2014-07-06', '1995-10-08', 'Vranje'  ),
+(20130027, 'Milena'  , 'Stankovic'  , null,  null, null     );
+
+create table ispit (
+indeks          integer not null                        ,
+id_predmeta     integer      not null                        ,
+godina_roka     smallint     not null                        ,
+oznaka_roka     char(5)      not null                        ,
+ocena           smallint     not null default 5         ,
+datum_ispita    date                                         ,
+bodovi          smallint                                     ,
+primary key (indeks, id_predmeta, godina_roka, oznaka_roka) 
+ );
+
+insert into ispit(indeks, id_predmeta, godina_roka, oznaka_roka, ocena, datum_ispita, bodovi)  values 
+(20140021, 1001, 2015, 'jan', 9, '2015-01-20', 81),
+(20140022, 1001, 2015, 'jan', 8, '2015-01-20', 75),
+(20130023, 1001, 2015, 'jan', 8, '2015-01-20', 76),
+(20130024, 1001, 2015, 'jan', 10,'2015-01-20', 100),
+(20140025, 1001, 2015, 'jan', 6, '2015-01-20', 55),
+(20140026, 1001, 2015, 'jan', 5, '2015-01-20', 25),
+(20130027, 1001, 2015, 'jan', 8, '2015-01-20', 76),
+(20130023, 1002, 2018, 'jun', 7, '2018-06-10', 6);
